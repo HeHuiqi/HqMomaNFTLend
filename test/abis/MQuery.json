@@ -1,0 +1,1040 @@
+[{
+        "inputs": [{
+            "internalType": "address",
+            "name": "_lenderMasterAddress",
+            "type": "address"
+        }],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "inputs": [],
+        "name": "allMarket",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "marketAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "cnftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "lnftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "bnftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "floorPrice",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "tokenAvailable",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "tokenTotalBorrows",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "minRequirement",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "colletralFactor",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "borrowRatePerSecond",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "penaltyFactor",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "utiliaztion",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256[]",
+                    "name": "apr",
+                    "type": "uint256[]"
+                },
+                {
+                    "internalType": "uint256[]",
+                    "name": "repayment",
+                    "type": "uint256[]"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "activeCollterals",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "nfts",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "exchangeRate",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "minBorrowSeconds",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "maxBorrowSeconds",
+                    "type": "uint256"
+                }
+            ],
+            "internalType": "struct Market[]",
+            "name": "_markets",
+            "type": "tuple[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "lenderMasterAddress",
+        "outputs": [{
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "marketAddress",
+            "type": "address"
+        }],
+        "name": "marketDetail",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "marketAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "cnftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "lnftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "bnftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "floorPrice",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "tokenAvailable",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "tokenTotalBorrows",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "minRequirement",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "colletralFactor",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "borrowRatePerSecond",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "penaltyFactor",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "utiliaztion",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256[]",
+                    "name": "apr",
+                    "type": "uint256[]"
+                },
+                {
+                    "internalType": "uint256[]",
+                    "name": "repayment",
+                    "type": "uint256[]"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "activeCollterals",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "nfts",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "exchangeRate",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "minBorrowSeconds",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "maxBorrowSeconds",
+                    "type": "uint256"
+                }
+            ],
+            "internalType": "struct Market",
+            "name": "_market",
+            "type": "tuple"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "marketAddress",
+            "type": "address"
+        }],
+        "name": "marketSupplyOrders",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "marketAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "cnftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "lnftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "bnftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "floorPrice",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "address",
+                    "name": "lender",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "supply",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "updateTime",
+                    "type": "uint256"
+                }
+            ],
+            "internalType": "struct MarketSupplyOrder[]",
+            "name": "_orders",
+            "type": "tuple[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "marketAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "tokenId",
+                "type": "uint256"
+            }
+        ],
+        "name": "orderDetail",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "imageUrl",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "marketAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "floorPrice",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "address",
+                    "name": "assetAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "address",
+                    "name": "lender",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "borrower",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "cnftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "lnftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "bnftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "loanValue",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "startTime",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "expireTime",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "minInterestRepayment",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "repayment",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "borrowRatePerSecond",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "penaltyFactor",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "changeSeconds",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "generatedInterest",
+                    "type": "uint256"
+                }
+            ],
+            "internalType": "struct Order",
+            "name": "_order",
+            "type": "tuple"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "testAr",
+        "outputs": [{
+            "internalType": "uint256[]",
+            "name": "_ar",
+            "type": "uint256[]"
+        }],
+        "stateMutability": "pure",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+        }],
+        "name": "userAllAsset",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "nftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "string",
+                    "name": "imageUrl",
+                    "type": "string"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "assetType",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "address",
+                    "name": "marketAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "availableToBorrow",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "floorPrice",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256[]",
+                    "name": "apr",
+                    "type": "uint256[]"
+                },
+                {
+                    "internalType": "uint256[]",
+                    "name": "repayment",
+                    "type": "uint256[]"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "minBorrowSeconds",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "maxBorrowSeconds",
+                    "type": "uint256"
+                }
+            ],
+            "internalType": "struct UserAsset[][]",
+            "name": "_allAssets",
+            "type": "tuple[][]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "user",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "marketAddress",
+                "type": "address"
+            }
+        ],
+        "name": "userAssetInMarket",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "nftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "string",
+                    "name": "imageUrl",
+                    "type": "string"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "assetType",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "address",
+                    "name": "marketAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "availableToBorrow",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "floorPrice",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256[]",
+                    "name": "apr",
+                    "type": "uint256[]"
+                },
+                {
+                    "internalType": "uint256[]",
+                    "name": "repayment",
+                    "type": "uint256[]"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "minBorrowSeconds",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "maxBorrowSeconds",
+                    "type": "uint256"
+                }
+            ],
+            "internalType": "struct UserAsset[]",
+            "name": "_assets",
+            "type": "tuple[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "marketAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "lnftAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "user",
+                "type": "address"
+            }
+        ],
+        "name": "userLentInMarket",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "_lentInMarket",
+            "type": "uint256"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "user",
+            "type": "address"
+        }],
+        "name": "userLiquidity",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "marketAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "availableToLend",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "lent",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "availableInMarket",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "lentInMarket",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "updateTime",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "minRequirement",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "position",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "supportMarkets",
+                    "type": "uint256"
+                }
+            ],
+            "internalType": "struct Liquidity[]",
+            "name": "_lps",
+            "type": "tuple[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "user",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "marketAddress",
+                "type": "address"
+            }
+        ],
+        "name": "userLiquidityInMarket",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "marketAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "availableToLend",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "lent",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "availableInMarket",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "lentInMarket",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "updateTime",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "minRequirement",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "position",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "supportMarkets",
+                    "type": "uint256"
+                }
+            ],
+            "internalType": "struct Liquidity",
+            "name": "_lp",
+            "type": "tuple"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "user",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "nftAddres",
+                "type": "address"
+            },
+            {
+                "internalType": "bool",
+                "name": "canEnum",
+                "type": "bool"
+            }
+        ],
+        "name": "userNftTokenIds",
+        "outputs": [{
+            "internalType": "uint256[]",
+            "name": "_tokenIds",
+            "type": "uint256[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "user",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "marketAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "bool",
+                "name": "isLender",
+                "type": "bool"
+            }
+        ],
+        "name": "userOdersInMarket",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "imageUrl",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "marketAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "floorPrice",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "address",
+                    "name": "assetAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "address",
+                    "name": "lender",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "borrower",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "cnftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "lnftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "bnftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "loanValue",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "startTime",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "expireTime",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "minInterestRepayment",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "repayment",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "borrowRatePerSecond",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "penaltyFactor",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "changeSeconds",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "generatedInterest",
+                    "type": "uint256"
+                }
+            ],
+            "internalType": "struct Order[]",
+            "name": "_orders",
+            "type": "tuple[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "user",
+                "type": "address"
+            },
+            {
+                "internalType": "bool",
+                "name": "isLender",
+                "type": "bool"
+            }
+        ],
+        "name": "userOrders",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "imageUrl",
+                    "type": "string"
+                },
+                {
+                    "internalType": "address",
+                    "name": "marketAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "floorPrice",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "address",
+                    "name": "assetAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "tokenId",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "address",
+                    "name": "lender",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "borrower",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "cnftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "lnftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "address",
+                    "name": "bnftAddress",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "loanValue",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "startTime",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "expireTime",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "minInterestRepayment",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "repayment",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "borrowRatePerSecond",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "penaltyFactor",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "changeSeconds",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "generatedInterest",
+                    "type": "uint256"
+                }
+            ],
+            "internalType": "struct Order[][]",
+            "name": "_orders",
+            "type": "tuple[][]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]

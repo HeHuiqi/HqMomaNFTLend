@@ -1,0 +1,26 @@
+{
+    "name": "lend",
+    "license": "MIT",
+    "scripts": {
+        "deploy": "npx hardhat run scripts/mquery-deploy.js",
+        "compile": "npx hardhat compile",
+        "market": "node test/hq-market-test.js",
+        "test": "node test/hq-ropsten-test.js",
+        "test2": "npx hardhat test test/hqquery-test.js",
+        "clean": "npx hardhat clean",
+        "verify": "npx hardhat run scripts/mquery-verify.js",
+        "fork": "npx hardhat node --fork https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161 --fork-block-number 12718020"
+    },
+    "devDependencies": {
+        "@nomiclabs/hardhat-ethers": "^2.0.6",
+        "@nomiclabs/hardhat-etherscan": "^3.1.0",
+        "@nomiclabs/hardhat-waffle": "^2.0.3",
+        "chai": "^4.3.6",
+        "ethereum-waffle": "^3.4.4",
+        "ethers": "^5.6.5",
+        "hardhat": "^2.9.4"
+    },
+    "dependencies": {
+        "@openzeppelin/contracts": "^4.6.0"
+    }
+}

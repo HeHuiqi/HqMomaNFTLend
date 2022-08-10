@@ -1,0 +1,896 @@
+[{
+        "anonymous": false,
+        "inputs": [{
+                "indexed": true,
+                "internalType": "address",
+                "name": "lender",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "tokenAmount",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "mTokenAmount",
+                "type": "uint256"
+            }
+        ],
+        "name": "Deposit",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{
+                "indexed": false,
+                "internalType": "address",
+                "name": "lender",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "address[]",
+                "name": "markets",
+                "type": "address[]"
+            }
+        ],
+        "name": "MarketsEntered",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{
+                "indexed": false,
+                "internalType": "address",
+                "name": "lender",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "address[]",
+                "name": "markets",
+                "type": "address[]"
+            }
+        ],
+        "name": "MarketsExited",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{
+                "indexed": true,
+                "internalType": "address",
+                "name": "market",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint128",
+                "name": "oldCollateralFactor",
+                "type": "uint128"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint128",
+                "name": "newCollateralFactor",
+                "type": "uint128"
+            }
+        ],
+        "name": "NewCollateralFactor",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{
+                "indexed": true,
+                "internalType": "address",
+                "name": "newMarket",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "lenderNFT",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint128",
+                "name": "newCollateralFactor",
+                "type": "uint128"
+            }
+        ],
+        "name": "NewMarket",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{
+                "indexed": false,
+                "internalType": "address",
+                "name": "oldPriceOracle",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "newPriceOracle",
+                "type": "address"
+            }
+        ],
+        "name": "NewPriceOracle",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [{
+                "indexed": true,
+                "internalType": "address",
+                "name": "lender",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "mTokenAmount",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "tokenAmount",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "actualAmount",
+                "type": "uint256"
+            }
+        ],
+        "name": "Withdraw",
+        "type": "event"
+    },
+    {
+        "inputs": [],
+        "name": "DEPOSIT_PAUSED",
+        "outputs": [{
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "GUARDIAN_ROLE",
+        "outputs": [{
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "MARKET_BORROW_PAUSED",
+        "outputs": [{
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "market",
+                "type": "address"
+            },
+            {
+                "internalType": "uint128",
+                "name": "newCollateralFactor",
+                "type": "uint128"
+            }
+        ],
+        "name": "adminSetCollateralFactor",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address[]",
+                "name": "markets",
+                "type": "address[]"
+            },
+            {
+                "internalType": "bool",
+                "name": "pause",
+                "type": "bool"
+            }
+        ],
+        "name": "adminSetMarketsBorrowPaused",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "newOracle",
+            "type": "address"
+        }],
+        "name": "adminSetPriceOracle",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "components": [{
+                    "internalType": "uint32",
+                    "name": "feeStageSeconds0",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "feeStageSeconds1",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "feeStageSeconds2",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "feeStage1",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "feeStage2",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "feeStage3",
+                    "type": "uint32"
+                }
+            ],
+            "internalType": "struct ILenderMaster.WithdrawFeeStage",
+            "name": "newWithdrawFeeStage",
+            "type": "tuple"
+        }],
+        "name": "adminSetWithdrawFeeStage",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "market",
+                "type": "address"
+            },
+            {
+                "internalType": "uint128",
+                "name": "collateralFactor",
+                "type": "uint128"
+            }
+        ],
+        "name": "adminSupportMarket",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "lender",
+            "type": "address"
+        }],
+        "name": "balanceOfUnderlying",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "tokenAmount",
+            "type": "uint256"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address[]",
+            "name": "markets",
+            "type": "address[]"
+        }],
+        "name": "deposit",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "mETHAmount",
+            "type": "uint256"
+        }],
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address[]",
+            "name": "markets",
+            "type": "address[]"
+        }],
+        "name": "enterMarkets",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "exchangeRate",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "rate",
+            "type": "uint256"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address[]",
+            "name": "markets",
+            "type": "address[]"
+        }],
+        "name": "exitMarkets",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getAllLenders",
+        "outputs": [{
+            "internalType": "address[]",
+            "name": "",
+            "type": "address[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getAllMarkets",
+        "outputs": [{
+            "internalType": "address[]",
+            "name": "",
+            "type": "address[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "index",
+            "type": "uint256"
+        }],
+        "name": "getLenderByIndex",
+        "outputs": [{
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "lender",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "index",
+                "type": "uint256"
+            }
+        ],
+        "name": "getLenderMarketByIndex",
+        "outputs": [{
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "lender",
+            "type": "address"
+        }],
+        "name": "getLenderMarketsNum",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getLendersNum",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "index",
+            "type": "uint256"
+        }],
+        "name": "getMarketByIndex",
+        "outputs": [{
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "market",
+            "type": "address"
+        }],
+        "name": "getMarketLoanValue",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "loanValue",
+            "type": "uint256"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "market",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "startIndex",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "num",
+                "type": "uint256"
+            }
+        ],
+        "name": "getMarketQueue",
+        "outputs": [{
+                "internalType": "address[]",
+                "name": "lenders",
+                "type": "address[]"
+            },
+            {
+                "internalType": "uint256[]",
+                "name": "times",
+                "type": "uint256[]"
+            },
+            {
+                "internalType": "uint256[]",
+                "name": "balances",
+                "type": "uint256[]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "market",
+            "type": "address"
+        }],
+        "name": "getMarketTotalCash",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "cash",
+            "type": "uint256"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "lender",
+            "type": "address"
+        }],
+        "name": "getMarketsIn",
+        "outputs": [{
+            "internalType": "address[]",
+            "name": "",
+            "type": "address[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address[]",
+            "name": "markets",
+            "type": "address[]"
+        }],
+        "name": "getMaxLoanValue",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "maxLoanValue",
+            "type": "uint256"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "getWithdrawAmount",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "lender",
+            "type": "address"
+        }],
+        "name": "isLender",
+        "outputs": [{
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "isLenderMaster",
+        "outputs": [{
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "market",
+            "type": "address"
+        }],
+        "name": "isMarketListed",
+        "outputs": [{
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "lender",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "market",
+                "type": "address"
+            }
+        ],
+        "name": "isMarketMembership",
+        "outputs": [{
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "lender",
+            "type": "address"
+        }],
+        "name": "lenderBorrowedTokenAmounts",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "lender",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "market",
+                "type": "address"
+            }
+        ],
+        "name": "lenderMarketUpdatedTime",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "market",
+            "type": "address"
+        }],
+        "name": "marketStates",
+        "outputs": [{
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            },
+            {
+                "internalType": "uint128",
+                "name": "",
+                "type": "uint128"
+            },
+            {
+                "internalType": "uint128",
+                "name": "",
+                "type": "uint128"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "borrower",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "lender",
+                "type": "address"
+            }
+        ],
+        "name": "onMarketBorrow",
+        "outputs": [{
+                "internalType": "uint256",
+                "name": "borrowAmount",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "totalCash",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "lender",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "borrowAmount",
+                "type": "uint256"
+            }
+        ],
+        "name": "onMarketLiquidateBorrow",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "lender",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "borrowAmount",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "lenderAmount",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "poolAmount",
+                "type": "uint256"
+            }
+        ],
+        "name": "onMarketRepayBorrow",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "address",
+                "name": "from",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "market",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "borrowAmount",
+                "type": "uint256"
+            }
+        ],
+        "name": "onNFTransfer",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "oracle",
+        "outputs": [{
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+            "internalType": "address",
+            "name": "lender",
+            "type": "address"
+        }],
+        "name": "totalTokenBalanceNow",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "underlying",
+        "outputs": [{
+            "internalType": "address",
+            "name": "",
+            "type": "address"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [{
+                "internalType": "uint256",
+                "name": "mETHAmount",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address[]",
+                "name": "markets",
+                "type": "address[]"
+            }
+        ],
+        "name": "withdraw",
+        "outputs": [{
+            "internalType": "uint256",
+            "name": "actualAmount",
+            "type": "uint256"
+        }],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "withdrawFeeStage",
+        "outputs": [{
+            "components": [{
+                    "internalType": "uint32",
+                    "name": "feeStageSeconds0",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "feeStageSeconds1",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "feeStageSeconds2",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "feeStage1",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "feeStage2",
+                    "type": "uint32"
+                },
+                {
+                    "internalType": "uint32",
+                    "name": "feeStage3",
+                    "type": "uint32"
+                }
+            ],
+            "internalType": "struct ILenderMaster.WithdrawFeeStage",
+            "name": "",
+            "type": "tuple"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    }
+]
