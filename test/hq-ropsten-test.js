@@ -14,13 +14,7 @@ marketAddress = '0xCbd2eAe05Cc82Ad407DFe31e8d4a97e254AF1749';
 const wallet_address = HqConfig.lender.account;
 const b_wallet_address = HqConfig.borrower.account;
 let query_address = '';
-// ok
-query_address = '0x76Fcb5310a7Cf774EcD9A8987BDC2ad0911FF14F';
-query_address = '0x6a4DfFAA70DB4EC3F53C055F06E7AcA63a50789d';
-query_address = '0x6c83C8a584f80Cecca5B4AC0Ed3Aac19f5C4F8a5';
-query_address = '0xd4b219bf7b85C1b5eAc100011FA8C389A4dbad8A';
-query_address = '0x7A2e1ebC5A59d0caE53C106b7D23f36494Fe6f72';
-query_address = '0x2964e2FDA052fADf577a350afDb8559A692D3cB8';
+query_address = '0x2223BAf067300d4d65013454Ea301D4af63Eb881';
 
 const query_abi = HqUtils.hardhatContractABI('MQuery');
 const provider = HqUtils.signerProvider(ropsten.accounts[0],ropsten.url);

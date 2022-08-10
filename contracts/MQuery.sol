@@ -35,6 +35,8 @@ contract MQuery is IMQuery {
         _market.tokenAvailable = totalMCash;
         _market.tokenTotalBorrows =  borrower.tokenTotalBorrows(address(0));
         _market.collateralFactor = collateralFactor;
+        _market.multiplierPerSecond = borrower.multiplierPerSecond();
+        _market.baseRatePerSecond = borrower.baseRatePerSecond();
         _market.utiliaztion = borrower.utilizationRate(
             _market.tokenAvailable,
             _market.tokenTotalBorrows
@@ -45,14 +47,12 @@ contract MQuery is IMQuery {
         _market.nfts = erc721.totalSupply();
         _market.maxBorrowSeconds = uint256(borrower.maxBorrowSeconds());
 
-        // uint256 ratePerSecond = _market.utiliaztion *
-        //     borrower.baseRatePerSecond() *
-        //     (borrower.multiplierPerSecond() / borrower.secondsPerYear());
+        // uint256 myBorrowRatePerSecond = _market.utiliaztion * _market.multiplierPerSecond() + _market.baseRatePerSecond();
 
-        uint40 ratePerSecond = borrower.getBorrowRatePerSecond(_market.tokenAvailable,_market.tokenTotalBorrows);
-        _market.borrowRatePerSecond = ratePerSecond;
-        uint256 threeDaysRate = uint256(3*24*3600) * uint256(ratePerSecond);
-        uint256 maxRate = _market.maxBorrowSeconds * uint256(ratePerSecond);
+        uint40 borrowRatePerSecond = borrower.getBorrowRatePerSecond(_market.tokenAvailable,_market.tokenTotalBorrows);
+        _market.borrowRatePerSecond = borrowRatePerSecond;
+        uint256 threeDaysRate = uint256(3*24*3600) * uint256(borrowRatePerSecond);
+        uint256 maxRate = _market.maxBorrowSeconds * uint256(borrowRatePerSecond);
         uint256[] memory _apr = new uint256[](2);
         _apr[0] = threeDaysRate;
         _apr[1] = maxRate;
@@ -405,6 +405,8 @@ contract MQuery is IMQuery {
                 address(0),
                 address(0),
                 address(0),
+                0,
+                0,
                 0,
                 0,
                 0,

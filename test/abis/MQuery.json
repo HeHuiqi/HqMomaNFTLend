@@ -58,7 +58,17 @@
                 },
                 {
                     "internalType": "uint256",
-                    "name": "colletralFactor",
+                    "name": "collateralFactor",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "baseRatePerSecond",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "multiplierPerSecond",
                     "type": "uint256"
                 },
                 {
@@ -185,7 +195,17 @@
                 },
                 {
                     "internalType": "uint256",
-                    "name": "colletralFactor",
+                    "name": "collateralFactor",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "baseRatePerSecond",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "multiplierPerSecond",
                     "type": "uint256"
                 },
                 {
@@ -427,17 +447,6 @@
             "type": "tuple"
         }],
         "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "testAr",
-        "outputs": [{
-            "internalType": "uint256[]",
-            "name": "_ar",
-            "type": "uint256[]"
-        }],
-        "stateMutability": "pure",
         "type": "function"
     },
     {

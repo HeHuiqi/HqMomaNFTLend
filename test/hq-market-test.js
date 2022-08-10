@@ -107,11 +107,24 @@ async function marketBaseInfo(market_address) {
     let borrowerMaster = createMarket(market_address,provider);
     // out = await borrowerMaster.signer();
     // console.log('signer:',out);
-    out = await lenderMaster.marketStates(market_address);
-    let totalMCash = out[1].toString();
-    out = await borrowerMaster.baseRatePerSecond();
-    console.log("baseRatePerSecond:",out);
+    let marketStates = await lenderMaster.marketStates(market_address);
+    let totalMCash = marketStates[1].toString();
+    console.log('totalMCash:',totalMCash);
+    let tokenTotalBorrows = await borrowerMaster.tokenTotalBorrows(HqUtils.ZeroAddress);
+    console.log('tokenTotalBorrows:',tokenTotalBorrows);
+    let baseRatePerSecond = await borrowerMaster.baseRatePerSecond();
+    console.log('baseRatePerSecond:',baseRatePerSecond);
+    let multiplierPerSecond = await borrowerMaster.multiplierPerSecond();
+    console.log('multiplierPerSecond:',multiplierPerSecond);
+   
+    let utilizationRate = await borrowerMaster.utilizationRate(totalMCash,tokenTotalBorrows);
+    console.log("utilizationRate:",utilizationRate);
+    let myBorrowRatePerSecond = utilizationRate.mul(multiplierPerSecond).div(HqUtils.BigOne).add(baseRatePerSecond);
+    console.log('myBorrowRatePerSecond:',myBorrowRatePerSecond);
+    let getBorrowRatePerSecond = await borrowerMaster.getBorrowRatePerSecond(totalMCash,tokenTotalBorrows);
+    console.log('getBorrowRatePerSecond:',getBorrowRatePerSecond);
     out = await borrowerMaster.collateral();
+    
     console.log('collateral:',out);
     
     out = await borrowerMaster.lenderNFT();
@@ -119,11 +132,7 @@ async function marketBaseInfo(market_address) {
     out = await borrowerMaster.borrowerNFT();
     console.log('borrowerNFT:',out);
     
-    out = await borrowerMaster.tokenTotalBorrows(HqUtils.ZeroAddress);
-    console.log('tokenTotalBorrows:',out);
-
-    out = await borrowerMaster.getBorrowRatePerSecond(out.toString(),totalMCash)
-    console.log('getBorrowRatePerSecond:',out);
+  
 }
 
 function localSigner() {
@@ -241,12 +250,11 @@ async function repayBorrow(market_address) {
 async function main(){
 
     // await lenderMasterBasInfo(lenderMasterAddress);
-    // await marketBaseInfo(marketAddress);
+    await marketBaseInfo(marketAddress);
     // await withdrawEth(HqUtils.UnitOne,[marketAddress]);
     // await borrowInMarket(marketAddress);
     // await orderDetail(marketAddress,2);
-    await repayBorrow(marketAddress);
-
+    // await repayBorrow(marketAddress);
 
 }
 main();

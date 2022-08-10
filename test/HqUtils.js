@@ -1,6 +1,9 @@
 const hre = require("hardhat");
+const { BigNumber } = require('ethers');
+
 const ZeroAddress = '0x0000000000000000000000000000000000000000';
 const UnitOne = '1000000000000000000';
+const BigOne = BigNumber.from(UnitOne);
 function hardhatContractABI(contractName) {
   const abi = hre.artifacts.readArtifactSync(contractName).abi;
 //   console.log('abi:', abi);
@@ -37,6 +40,7 @@ function messageHash(types,values) {
 const HqUtils = {
     ZeroAddress,
     UnitOne,
+    BigOne,
     hardhatContractABI,
     signerProvider,
     createContract,

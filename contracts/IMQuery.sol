@@ -19,6 +19,8 @@ struct Market{
     uint256 tokenTotalBorrows; //已借出数量
     uint256 minRequirement;
     uint256 collateralFactor; //抵押率 除以1e18
+    uint256 baseRatePerSecond;// 每秒基础利率
+    uint256 multiplierPerSecond;// 每秒利用率乘子
     uint256 borrowRatePerSecond;//每秒借款利率
     uint256 penaltyFactor; //惩罚系数 除以1e4
     uint256 utiliaztion; //利用率  除以1e18
