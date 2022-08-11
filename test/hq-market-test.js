@@ -156,6 +156,11 @@ function createMarket(market_address,wallet) {
     let borrowerMaster = HqUtils.createContract(market_address,borrower_abi,wallet);
     return borrowerMaster;
 }
+ function msgHash(collateralId,token,market_address,expiration,chainId) {
+    const hash = HqUtils.messageHash(['uint256','address','address','uint256','uint256'],
+    [collateralId,token,market_address,expiration,chainId]);
+    return hash;
+}
 async function borrowInMarket(market_address) {
 
     //记得先approve
@@ -175,8 +180,9 @@ async function borrowInMarket(market_address) {
         signature:'',
     };
     const chainId = 3;//ropsten
-    borrowParams.hash = HqUtils.messageHash(['uint256','address','address','uint256','uint256'],
-    [borrowParams.collateralId,borrowParams.token,market_address,borrowParams.expiration,chainId]);
+    // borrowParams.hash = HqUtils.messageHash(['uint256','address','address','uint256','uint256'],
+    // [borrowParams.collateralId,borrowParams.token,market_address,borrowParams.expiration,chainId]);
+    borrowParams.hash = msgHash(borrowParams.collateralId,borrowParams.token,market_address,borrowParams.expiration,chainId);
     const signature = await localSignMessage(borrowParams.hash);
     borrowParams.signature = signature;
 
