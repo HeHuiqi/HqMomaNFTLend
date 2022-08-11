@@ -18,7 +18,6 @@ contract MQuery is IMQuery {
         returns (Market memory _market)
     {
         ILenderMasterEther lender = ILenderMasterEther(lenderMasterAddress);
-        IPriceOracle oracle = IPriceOracle(lender.oracle());
         IBorrowerMaster borrower = IBorrowerMaster(marketAddress);
         (
             address lenderNFT,
@@ -31,7 +30,7 @@ contract MQuery is IMQuery {
         _market.cnftAddress = borrower.collateral();
         _market.lnftAddress = lenderNFT;
         _market.bnftAddress = borrower.borrowerNFT();
-        _market.floorPrice = oracle.getFloorPriceByMarket(marketAddress);
+        _market.floorPrice = IPriceOracle(lender.oracle()).getFloorPriceByMarket(marketAddress);
         _market.tokenAvailable = totalMCash;
         _market.tokenTotalBorrows =  borrower.tokenTotalBorrows(address(0));
         _market.collateralFactor = collateralFactor;
@@ -50,7 +49,10 @@ contract MQuery is IMQuery {
         // uint256 myBorrowRatePerSecond = _market.utiliaztion * _market.multiplierPerSecond() + _market.baseRatePerSecond();
 
         uint40 borrowRatePerSecond = borrower.getBorrowRatePerSecond(_market.tokenAvailable,_market.tokenTotalBorrows);
-        _market.borrowRatePerSecond = borrowRatePerSecond;
+        _market.borrowRatePerSecond = uint256(borrowRatePerSecond);
+        //计算时类型要一致，否则调用报错
+        _market.borrowApr = _market.borrowRatePerSecond * uint256(borrower.secondsPerYear());
+        /*
         uint256 threeDaysRate = uint256(3*24*3600) * uint256(borrowRatePerSecond);
         uint256 maxRate = _market.maxBorrowSeconds * uint256(borrowRatePerSecond);
         uint256[] memory _apr = new uint256[](2);
@@ -58,11 +60,11 @@ contract MQuery is IMQuery {
         _apr[1] = maxRate;
         _market.apr = _apr;
 
-        // todo repayment
         uint256[] memory _repayment = new uint256[](2);
         _repayment[0] = _market.tokenAvailable +   _market.tokenAvailable*threeDaysRate/1e18;
         _repayment[1] = _market.tokenAvailable + _market.tokenAvailable*maxRate/1e18;
         _market.repayment = _repayment;
+        */
 
         _market.exchangeRate = lender.exchangeRate();
 
@@ -128,6 +130,7 @@ contract MQuery is IMQuery {
         override
         returns (Order memory _order)
     {
+        ILenderMasterEther lender = ILenderMasterEther(lenderMasterAddress);
         IBorrowerMaster borrower = IBorrowerMaster(marketAddress);
         IMERC721 erc721 = IMERC721(borrower.collateral());
         (
@@ -149,12 +152,13 @@ contract MQuery is IMQuery {
         _order.cnftAddress = borrower.collateral();
         _order.lnftAddress = borrower.lenderNFT();
         _order.bnftAddress = borrower.borrowerNFT();
+        _order.floorPrice = IPriceOracle(lender.oracle()).getFloorPriceByMarket(marketAddress);
         _order.lender = IERC721(borrower.lenderNFT()).ownerOf(tokenId);
         _order.borrower = IERC721(borrower.borrowerNFT()).ownerOf(tokenId);
         _order.assetAddress = tAdr;
         _order.borrowRatePerSecond = borrowRatePerSecond;
         _order.penaltyFactor = penaltyFactor;
-        _order.changeSeconds = borrower.getChargeSeconds(startTime,block.timestamp,expireTime,_order.penaltyFactor/1e4);
+        _order.changeSeconds = borrower.getChargeSeconds(startTime,block.timestamp,expireTime,penaltyFactor/1e4);
         _order.generatedInterest = _order.changeSeconds *(_order.borrowRatePerSecond);
         _order.repayment = borrowedAmount + _order.generatedInterest; 
         return _order;
@@ -191,10 +195,14 @@ contract MQuery is IMQuery {
             _lp = _makeDefaultLiquidity();
             _lp.name = IMERC721(_market.cnftAddress).name();
             _lp.marketAddress = marketAddress;
+            _lp.isLender = lender.isLender(user);
             _lp.availableToLend = lender.balanceOfUnderlying(user);
             _lp.lent = lender.totalTokenBalanceNow(user) - _lp.availableToLend;
             _lp.minRequirement = _market.minRequirement;
             _lp.supportMarkets = lender.getMarketsIn(user).length;
+            _lp.borrowApr = _market.borrowApr;
+            _lp.minBorrowSeconds = _market.minBorrowSeconds;
+            _lp.maxBorrowSeconds = _market.maxBorrowSeconds;
 
             uint256 j = 0;
             (
@@ -271,6 +279,25 @@ contract MQuery is IMQuery {
         return _tokenIds;
     }
 
+    function userAsset(string memory name,uint256 tokenId, string memory uri,uint256 assetType,Market memory market) public pure returns(UserAsset memory _asset ) {
+        
+        _asset = _makeUserAsset();
+        _asset.nftAddress = market.cnftAddress;
+        _asset.name = name;
+        _asset.tokenId =  tokenId;
+        _asset.imageUrl = uri;
+        _asset.marketAddress = market.marketAddress;
+        _asset.availableToBorrow = market.floorPrice * 1e18 / market.collateralFactor;
+        _asset.borrowApr = market.borrowApr;
+        _asset.floorPrice = market.floorPrice;
+        _asset.borrowRatePerSecond = market.borrowRatePerSecond;
+        _asset.penaltyFactor = market.penaltyFactor;
+        _asset.minBorrowSeconds = market.minBorrowSeconds;
+        _asset.maxBorrowSeconds = market.maxBorrowSeconds;
+        _asset.assetType = assetType;
+            return _asset;
+    }
+
     //用户在某个市场的资产
     function userAssetInMarket(address user,address marketAddress)
         public
@@ -286,63 +313,20 @@ contract MQuery is IMQuery {
         _assets = new UserAsset[](_nftBalance);
         uint256 i = 0;
         for (i; i < _cnft.balanceOf(user); i++) {
-            UserAsset memory _asset = _makeUserAsset();
-            _asset.nftAddress = _market.cnftAddress;
-            _asset.marketAddress = marketAddress;
-            _asset.name = _cnft.name();
-            _asset.tokenId = _cnft.tokenOfOwnerByIndex(user, i);
-            _asset.imageUrl = _cnft.tokenURI(_asset.tokenId);
-            _asset.marketAddress = marketAddress;
-
-            // toto
-            _asset.availableToBorrow =
-                _market.floorPrice /
-                _market.collateralFactor;
-            _asset.apr = _market.apr;
-            _asset.repayment = _market.repayment;
-            _asset.floorPrice = _market.floorPrice;
-            _asset.minBorrowSeconds = _market.minBorrowSeconds;
-            _asset.maxBorrowSeconds = _market.maxBorrowSeconds;
-            _asset.assetType = 1;
+            uint256 tokenId = _cnft.tokenOfOwnerByIndex(user, i);
+            UserAsset memory _asset = userAsset(_cnft.name(),tokenId , _cnft.tokenURI(tokenId), 1,_market);
             _assets[i] = _asset;
         }
         for (i; (i-_cnft.balanceOf(user)) < _lnft.balanceOf(user); i++) {
-            UserAsset memory _asset = _makeUserAsset();
-            _asset.nftAddress = _market.lnftAddress;
-            _asset.marketAddress = marketAddress;
-            _asset.name = _lnft.name();
-            _asset.tokenId = _lnft.tokenOfOwnerByIndex(user, i-_cnft.balanceOf(user));
-            _asset.imageUrl = _lnft.tokenURI(_asset.tokenId);
-            _asset.marketAddress = marketAddress;
-            // toto
-            _asset.availableToBorrow =
-                _market.floorPrice /
-                _market.collateralFactor;
-            _asset.apr = _market.apr;
-            _asset.repayment = _market.repayment;
-            _asset.floorPrice = _market.floorPrice;
-            _asset.minBorrowSeconds = _market.minBorrowSeconds;
-            _asset.maxBorrowSeconds = _market.maxBorrowSeconds;
-            _asset.assetType = 2;
+
+            uint256 tokenId = _lnft.tokenOfOwnerByIndex(user, i-_cnft.balanceOf(user));
+            UserAsset memory _asset = userAsset(_lnft.name(),tokenId , _lnft.tokenURI(tokenId), 2,_market);
             _assets[i] = _asset;
         }
         for (i; (i-_cnft.balanceOf(user) - _lnft.balanceOf(user)) < _bnft.balanceOf(user); i++) {
-            UserAsset memory _asset = _makeUserAsset();
-            _asset.marketAddress = marketAddress;
-            _asset.name = _bnft.name();
-            _asset.tokenId = _bnft.tokenOfOwnerByIndex(user, (i-_cnft.balanceOf(user) - _lnft.balanceOf(user)));
-            _asset.imageUrl = _bnft.tokenURI(_asset.tokenId);
-            _asset.marketAddress = marketAddress;
-            // toto
-            _asset.availableToBorrow =
-                _market.floorPrice /
-                _market.collateralFactor;
-            _asset.apr = _market.apr;
-            _asset.repayment = _market.repayment;
-            _asset.floorPrice = _market.floorPrice;
-            _asset.minBorrowSeconds = _market.minBorrowSeconds;
-            _asset.maxBorrowSeconds = _market.maxBorrowSeconds;
-            _asset.assetType = 3;
+
+            uint256 tokenId = _bnft.tokenOfOwnerByIndex(user, (i-_cnft.balanceOf(user) - _lnft.balanceOf(user)));
+            UserAsset memory _asset = userAsset(_bnft.name(),tokenId , _bnft.tokenURI(tokenId), 2,_market);
             _assets[i] = _asset;
         }
         return _assets;
@@ -395,9 +379,9 @@ contract MQuery is IMQuery {
 
     // internal
     function _makeDefaultMarket() internal pure returns (Market memory) {
-        uint256[] memory _defaultNum = new uint256[](2);
-        _defaultNum[0] = 0;
-        _defaultNum[1] = 0;
+        // uint256[] memory _defaultNum = new uint256[](2);
+        // _defaultNum[0] = 0;
+        // _defaultNum[1] = 0;
         return
             Market(
                 "unkonwn",
@@ -415,8 +399,7 @@ contract MQuery is IMQuery {
                 0,
                 0,
                 0,
-                _defaultNum,
-                _defaultNum,
+                0,
                 0,
                 0,
                 0,
@@ -471,13 +454,13 @@ contract MQuery is IMQuery {
     }
 
     function _makeDefaultLiquidity() internal pure returns (Liquidity memory) {
-        return Liquidity("unknow", address(0), 0, 0, 0, 0, 0, 0, 0,0);
+        return Liquidity("unknow", address(0), 0, 0, 0, 0, 0, 0, 0,0,0,0,0,false);
     }
 
     function _makeUserAsset() internal pure returns (UserAsset memory) {
-        uint256[] memory _defaultNum = new uint256[](2);
-        _defaultNum[0] = 0;
-        _defaultNum[1] = 0;
+        // uint256[] memory _defaultNum = new uint256[](2);
+        // _defaultNum[0] = 0;
+        // _defaultNum[1] = 0;
         return
             UserAsset(
                 "",
@@ -488,8 +471,9 @@ contract MQuery is IMQuery {
                 address(0),
                 0,
                 0,
-                _defaultNum,
-                _defaultNum,
+                0,
+                0,
+                0,
                 0,
                 0
             );

@@ -47,6 +47,8 @@ async function lenderMasterBasInfo(lender_address) {
     out = await lenderMaster.marketStates(marketAddress);
     let totalMCash = out[1].toString();
     console.log('marketStates:',out);
+    out = await lenderMaster.isLender(b_wallet_address);
+    console.log('isLender:',out);
 
     out = await lenderMaster.exchangeRate();
     console.log("exchangeRate:",out);
@@ -110,6 +112,8 @@ async function marketBaseInfo(market_address) {
     let marketStates = await lenderMaster.marketStates(market_address);
     let totalMCash = marketStates[1].toString();
     console.log('totalMCash:',totalMCash);
+    let secondsPerYear = await borrowerMaster.secondsPerYear();
+    console.log('secondsPerYear:',secondsPerYear);
     let tokenTotalBorrows = await borrowerMaster.tokenTotalBorrows(HqUtils.ZeroAddress);
     console.log('tokenTotalBorrows:',tokenTotalBorrows);
     let baseRatePerSecond = await borrowerMaster.baseRatePerSecond();

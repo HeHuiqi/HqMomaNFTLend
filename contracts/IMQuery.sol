@@ -24,8 +24,7 @@ struct Market{
     uint256 borrowRatePerSecond;//每秒借款利率
     uint256 penaltyFactor; //惩罚系数 除以1e4
     uint256 utiliaztion; //利用率  除以1e18
-    uint256[] apr;
-    uint256[] repayment;
+    uint256 borrowApr; //借款利率
     uint256 activeCollterals;
     uint256 nfts;
     uint256 exchangeRate; //兑换率
@@ -70,6 +69,7 @@ struct Order{
 }
 struct Liquidity{
     string name;
+    
     address marketAddress;
     uint256 availableToLend; //总共可借出数量
     uint256 lent; //总共已借出数量
@@ -79,6 +79,10 @@ struct Liquidity{
     uint256 minRequirement;//该市场最少可以借多少
     uint256 position; //在某个市场的位置
     uint256 supportMarkets; //当前支持几个市场
+    uint256 borrowApr;
+    uint256 minBorrowSeconds; //最小借款周期
+    uint256 maxBorrowSeconds; //最大借款周期
+    bool isLender;
 }
 
 struct UserAsset{
@@ -90,8 +94,9 @@ struct UserAsset{
     address marketAddress; //市场地址
     uint256 availableToBorrow;//可借多少钱
     uint256 floorPrice;
-    uint256[] apr;
-    uint256[] repayment;
+    uint256 borrowApr;//借款利率
+    uint256 borrowRatePerSecond;//每秒借款利率
+    uint256 penaltyFactor; //惩罚系数 除以1e4
     uint256 minBorrowSeconds; //最小借款周期
     uint256 maxBorrowSeconds; //最大借款周期
 }
