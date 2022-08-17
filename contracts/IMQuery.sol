@@ -8,28 +8,29 @@ import "./interface/IBorrowerMaster.sol";
 import "./interface/IMERC721.sol";
 import "./interface/IPriceOracle.sol";
 // 字段基本和页面保持一致
+// 数据精度标出的按标出计算，未标出的都是除以1e18
 struct Market{
     string  name;
     address marketAddress;
     address cnftAddress;//抵押nft
     address lnftAddress;//债权nft
     address bnftAddress;//债务nft
-    uint256 floorPrice;
+    uint256 floorPrice;//地板价
     uint256 tokenAvailable; // 可借数量
     uint256 tokenTotalBorrows; //已借出数量
     uint256 minRequirement;
-    uint256 collateralFactor; //抵押率 除以1e18
+    uint256 collateralFactor; //抵押率 
     uint256 baseRatePerSecond;// 每秒基础利率
     uint256 multiplierPerSecond;// 每秒利用率乘子
     uint256 borrowRatePerSecond;//每秒借款利率
     uint256 penaltyFactor; //惩罚系数 除以1e4
-    uint256 utiliaztion; //利用率  除以1e18
+    uint256 utiliaztion; //利用率  
     uint256 borrowApr; //借款利率
-    uint256 activeCollterals;
-    uint256 nfts;
+    uint256 activeCollterals;//除以1
+    uint256 nfts;//除以1
     uint256 exchangeRate; //兑换率
-    uint256 minBorrowSeconds; //最小借款周期
-    uint256 maxBorrowSeconds; //最大借款周期
+    uint256 minBorrowSeconds; //最小借款周期，除以1
+    uint256 maxBorrowSeconds; //最大借款周期，除以1
 
 }
 
@@ -42,7 +43,7 @@ struct MarketSupplyOrder{
     uint256 floorPrice;
     address lender;
     uint256 supply;
-    uint256 updateTime;//余额最后更新时间
+    uint256 updateTime;//余额最后更新时间，除以1
 }
 // 借贷订单
 struct Order{
@@ -51,20 +52,20 @@ struct Order{
     address marketAddress;
     uint256 floorPrice;
     address assetAddress;
-    uint256 tokenId;
+    uint256 tokenId;//除以1
     address lender;
     address borrower;
     address cnftAddress;//抵押nft
     address lnftAddress;//债权nft
     address bnftAddress;//债务nft
     uint256 loanValue;
-    uint256 startTime;
-    uint256 expireTime; //结束时间
+    uint256 startTime; //除以1
+    uint256 expireTime; //结束时间 除以1
     uint256 minInterestRepayment;
     uint256 repayment;
-    uint256 borrowRatePerSecond; //除以1e18
+    uint256 borrowRatePerSecond; 
     uint256 penaltyFactor; //惩罚系数 除以1e4
-    uint256 changeSeconds; //经历的秒数
+    uint256 changeSeconds; //经历的秒数，除以1
     uint256 generatedInterest;// 利息
 }
 struct Liquidity{
@@ -75,30 +76,31 @@ struct Liquidity{
     uint256 lent; //总共已借出数量
     uint256 availableInMarket; //在某个市场可借出多少
     uint256 lentInMarket;//在某个市场已借出多少
-    uint256 updateTime; //最后一次存钱的时间
+    uint256 updateTime; //最后一次存钱的时间，除以1
     uint256 minRequirement;//该市场最少可以借多少
-    uint256 position; //在某个市场的位置
-    uint256 supportMarkets; //当前支持几个市场
+    uint256 position; //在某个市场的位置，除以1
+    uint256 supportMarkets; //当前支持几个市场，除以1
     uint256 borrowApr;
-    uint256 minBorrowSeconds; //最小借款周期
-    uint256 maxBorrowSeconds; //最大借款周期
-    bool isLender;
+    uint256 minBorrowSeconds; //最小借款周期，除以1
+    uint256 maxBorrowSeconds; //最大借款周期，除以1
+    bool isLender;// true或false
+    bool isSupportMarket; //true或false
 }
 
 struct UserAsset{
     string name;
     address nftAddress;
-    uint256 tokenId;
+    uint256 tokenId;//除以1
     string imageUrl;
-    uint256 assetType; // 资产类型 1:原始NFT 2:债务NFT 3:债券NFT 
+    uint256 assetType; // 资产类型 1:原始NFT 2:债务NFT 3:债券NFT ,除以1
     address marketAddress; //市场地址
     uint256 availableToBorrow;//可借多少钱
     uint256 floorPrice;
     uint256 borrowApr;//借款利率
     uint256 borrowRatePerSecond;//每秒借款利率
     uint256 penaltyFactor; //惩罚系数 除以1e4
-    uint256 minBorrowSeconds; //最小借款周期
-    uint256 maxBorrowSeconds; //最大借款周期
+    uint256 minBorrowSeconds; //最小借款周期，除以1
+    uint256 maxBorrowSeconds; //最大借款周期，除以1
 }
 
 

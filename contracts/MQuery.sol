@@ -177,6 +177,7 @@ contract MQuery is IMQuery {
             }
         return _orders;
     }
+    
     //用户借贷订单
     function userOrders(address user,bool isLender) public view override  returns(Order[][] memory _orders) {
         ILenderMasterEther lender = ILenderMasterEther(lenderMasterAddress);
@@ -196,6 +197,7 @@ contract MQuery is IMQuery {
             _lp.name = IMERC721(_market.cnftAddress).name();
             _lp.marketAddress = marketAddress;
             _lp.isLender = lender.isLender(user);
+            _lp.isSupportMarket = lender.isMarketMembership(user, marketAddress);
             _lp.availableToLend = lender.balanceOfUnderlying(user);
             _lp.lent = lender.totalTokenBalanceNow(user) - _lp.availableToLend;
             _lp.minRequirement = _market.minRequirement;
@@ -454,7 +456,7 @@ contract MQuery is IMQuery {
     }
 
     function _makeDefaultLiquidity() internal pure returns (Liquidity memory) {
-        return Liquidity("unknow", address(0), 0, 0, 0, 0, 0, 0, 0,0,0,0,0,false);
+        return Liquidity("unknow", address(0), 0, 0, 0, 0, 0, 0, 0,0,0,0,0,false,false);
     }
 
     function _makeUserAsset() internal pure returns (UserAsset memory) {
