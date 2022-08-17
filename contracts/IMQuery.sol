@@ -83,8 +83,8 @@ struct Liquidity{
     uint256 borrowApr;
     uint256 minBorrowSeconds; //最小借款周期，除以1
     uint256 maxBorrowSeconds; //最大借款周期，除以1
-    bool isLender;// true或false
-    bool isSupportMarket; //true或false
+    bool isLender;//是否是放贷人 true或false
+    bool isSupportMarket; //是否支持某个市场,true或false
 }
 
 struct UserAsset{

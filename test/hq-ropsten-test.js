@@ -28,14 +28,8 @@ const provider = HqUtils.signerProvider(ropsten.accounts[0],ropsten.url);
 const query = HqUtils.createContract(query_address,query_abi,provider);
 
 
-async function main(){
+async function testAll() {
     let out;
-
-    let isupdateabi = true;
-    if(isupdateabi){
-        const fileName = path.join(__dirname,'/abis/MQuery.json');
-        fs.writeFileSync(fileName,JSON.stringify(query_abi));
-    }
     out = await query.marketDetail(marketAddress);
     console.log('marketDetail:',out);
 
@@ -75,5 +69,60 @@ async function main(){
 
     out = await query.userAllAsset(wallet_address);
     console.log('userAllAsset:',out);
+}
+
+async function main(){
+    
+
+    let isupdateabi = true;
+    if(isupdateabi){
+        const fileName = path.join(__dirname,'/abis/MQuery.json');
+        fs.writeFileSync(fileName,JSON.stringify(query_abi));
+    }
+    let isTestAll = false;
+    if(isTestAll){
+        await testAll();
+        return;
+    }
+    let out;
+    // out = await query.marketDetail(marketAddress);
+    // console.log('marketDetail:',out);
+
+    // out = await query.allMarket();
+    // console.log('allMarket:',out);
+  
+
+    // out = await query.marketSupplyOrders(marketAddress);
+    // console.log('marketSupplyOrders:',out);
+    
+
+    // out = await query.orderDetail(marketAddress,2);
+    // console.log('orderDetail:',out);
+
+    // out = await query.userOdersInMarket(b_wallet_address,marketAddress,false);
+    // console.log('userOdersInMarket:',out);
+    
+
+    // out = await query.userOdersInMarket(b_wallet_address,marketAddress,false);
+    // console.log('userOdersInMarket:',out);
+    
+    // out = await query.userOrders(b_wallet_address,false);
+    // console.log('userOrders:',out);
+
+
+
+    out = await query.userLiquidityInMarket(wallet_address,marketAddress);
+    console.log('userLiquidityInMarket:',out);
+
+    // out = await query.userLiquidity(wallet_address);
+    // console.log('userLiquidity:',out);
+    
+
+
+    // out = await query.userAssetInMarket(wallet_address,marketAddress);
+    // console.log('userAssetInMarket:',out);
+
+    // out = await query.userAllAsset(wallet_address);
+    // console.log('userAllAsset:',out);
 }
 main();
