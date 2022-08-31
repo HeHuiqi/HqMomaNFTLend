@@ -82,7 +82,7 @@ contract MQuery is IMQuery {
         uint256 marketLen = marketsAddress.length;
         _markets = new Market[](marketLen);
         for (uint256 i = 0; i < marketLen; i++) {
-            _markets[0] = marketDetail(marketsAddress[i]);
+            _markets[i] = marketDetail(marketsAddress[i]);
         }
         return _markets;
     }
@@ -103,7 +103,7 @@ contract MQuery is IMQuery {
         ) = lender.getMarketQueue(
                 marketAddress,
                 0,
-                lender.getAllMarkets().length
+                lender.getLendersNum()
             );
         _orders = new MarketSupplyOrder[](lenders.length);
         for (uint256 i = 0; i < lenders.length; i++) {

@@ -163,7 +163,7 @@ function createMarket(market_address,wallet) {
 }
 async function borrowInMarket(market_address) {
 
-    //记得先approve
+    //抵押NFT记得先向BorrowMaster市场合约approve 
     console.log('------------------------------BorrowerMaster------------------------------');
     const wallet = localSigner();
     let borrowerMaster = createMarket(market_address,wallet);

@@ -87,6 +87,8 @@ struct Liquidity{
     bool isSupportMarket; //是否支持某个市场,true或false
 }
 
+
+
 struct UserAsset{
     string name;
     address nftAddress;
